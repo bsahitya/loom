@@ -514,7 +514,8 @@ func TestParkable_SpanRecordsNotParking(t *testing.T) {
 }
 
 // A recorded question whose tool has been unregistered entirely reports
-// tool_not_found, the same condition dispatch reports for an unknown tool.
+// tool_not_found. Only the message matches dispatch's unknown-tool error;
+// dispatch returns a Go error with no result or code.
 func TestParkable_ResumeToolUnregisteredIsToolNotFound(t *testing.T) {
 	ft := newFormTool(true)
 	f := newFormFixture(t, nil, ft, formScript())
