@@ -25,11 +25,14 @@ import "context"
 // card cannot bind such a call), or an in-turn resolver is used instead of
 // park. Execute should then explain why the tool needs a human.
 //
-// Both methods may be called more than once for the same call and must be
-// pure with respect to the input. The agent decides whether a call parks when
-// the turn parks and records that decision on the park row; on resume it
-// trusts the recorded decision and does not call ParkQuestion again. After a
-// restart the input has been through JSON, so numbers arrive as float64.
+// Today each method is called at most once per call: ParkQuestion when the
+// turn parks, ParkAnswerResult when it resumes. Implementations must still be
+// pure with respect to the input and tolerate repeated calls, so the agent
+// remains free to re-invoke them (for example after a crash between the two
+// steps). The agent decides whether a call parks when the turn parks and
+// records that decision on the park row; on resume it trusts the recorded
+// decision and does not call ParkQuestion again. After a restart the input has
+// been through JSON, so numbers arrive as float64.
 //
 // A policy Ask on a ParkableQuestion tool does not produce a separate
 // approval: the question card is the only human step, as for contact_human.
